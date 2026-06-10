@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "framework": "vite",
   "builds": [
     {
       "src": "package.json",
@@ -8,16 +7,24 @@
       "config": {
         "distDir": "dist/client"
       }
+    },
+    {
+      "src": "dist/server/server.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/([^/]+)\\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$",
-      "dest": "/assets/$1.$2"
+      "src": "/_nitro/(.*)",
+      "dest": "dist/server/server.js"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "dist/server/server.js"
     }
   ]
 }
